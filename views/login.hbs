@@ -1,0 +1,59 @@
+{{> header-login }}
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <!-- Login Form -->
+        <form>
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+            <button id="loginButton" class="btn btn-primary fadeIn fourth m-2" >Login</button>
+            <div id="message" class="alert alert-danger hidden m-2" role="alert">
+                This is a danger alert—check it out!
+            </div>
+        </form>
+
+        <!-- Remind Password -->
+        <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#message').hide();
+        $('#loginButton').on('click', function(e) {
+            // Do not submit until I am ready
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/auth/login",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "username": $("#login").val(),
+                    "password": $("#password").val()
+                }),
+                success: function(result, status) {
+                    console.log("got login status back", result);
+                    if (result.successful) {
+                        // This will navigate to wherever i say...
+                        window.location.href = '/dashboard';
+                    }
+                    else {
+                        // Show an error message or something and stay here
+                        $('#message').html(result.message);
+                        $('#message').show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    err = eval("error: (" + xhr.responseText + ")");
+                    console.error(err);
+                },
+                complete: function(data, status) { //optional, used for debugging purposes
+                    console.log(status);
+                }
+            });
+        })
+    });
+</script>

@@ -1,0 +1,220 @@
+{{> header-login }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+<!--        // Header-->
+<header class="text-center">
+   <!--        // The Title Banner-->
+   <h1 class="jumbotron"> Reverse Recipe Book <br> Ingredient Selector </h1>
+</header>
+<!--        // Main area-->
+{{!--<form action="/results" method="post">--}}
+<main>
+   <br>
+   <!--   // dropdown menu items-->
+   <div class="ingredient-selector">
+      <div class="form-group col-md-6">
+         <select id="dropDownMenu1" class="form-control">
+            <option selected>Choose An Ingredient</option>
+            {{#each ingredientName}}
+               <option>{{ingredientName}}</option>
+            {{/each}}
+         </select>
+      </div>
+      <div class="form-group col-md-6">
+         <select id="dropDownMenu2" class="form-control">
+            <option selected>Choose An Ingredient</option>
+            {{#each ingredientName}}
+               <option>{{ingredientName}}</option>
+            {{/each}}
+         </select>
+      </div>
+      <span id="drop-down-area"></span>
+   </div>
+   <br>
+   <div class="format-content">
+      <img src="/img/plus-button.png" height="25" alt="plus" id="plus-button">
+      <img src="/img/minus-button.png" height="25" alt="minus" id="minus-button">
+   </div>
+    <div class="text-center">
+        <button id="search" class="btn btn-sm btn-secondary">Search</button>
+        <br><br>
+        <button class="btn btn-sm btn-secondary mr-2" id="averageIngredients">Average Number of Ingredients for Recipe</button>
+        <span id="averageIngredientsResult"></span>
+        <br><br>
+        <button class="btn btn-sm btn-secondary mr-2" id="ingredientCountByRecipe">Number of Ingredients by Recipe</button>
+        <span id="ingredientCountResult"></span>
+        <br><br>
+        <button class="btn btn-sm btn-secondary mr-2 mb-2" id="totalNumberRecipes">Total Number of Recipes</button>
+        <span id="totalNumberRecipesResult"></span>
+    </div>
+   <div id = 'recipeResults'></div><br>
+</main>
+<script type="text/javascript">
+   var currentDropDownMenuCount = 2;  // Used to ensure that we always have 2 ingredients and more than 10 ingredients
+   $(document).ready(function() {
+      //On plus button click
+      $('#plus-button').click(function(){
+         if(currentDropDownMenuCount < 10) {
+            currentDropDownMenuCount++; //increment the count
+            var spanIdName = "dropDownMenu" + currentDropDownMenuCount; // create the id string
+            $("#drop-down-area").append('<div class="form-group col-md-6">\n' +
+               '\t\t\t\t<select id="' + spanIdName + '" class="form-control">\n' +
+               '\t\t\t\t\t<option selected>Choose An Ingredient</option>\n' +
+               '\t\t\t\t\t{{#each ingredientName}}\n'+
+                  '\t\t\t\t\t\t<option>{{ingredientName}}</option>\n' +
+                  '\t\t\t\t\t{{/each}}\n' +
+               '\n' +
+               '\t\t\t\t</select>\n' +
+               '\t\t\t</div>')
+            console.log(spanIdName + " created");
+         } // end of if statement
+      });//end of plus button
+      //On minus button click
+      $('#minus-button').click(function(){
+         if(currentDropDownMenuCount > 2) {
+            var elementToBeRemove = 'dropDownMenu' + currentDropDownMenuCount;
+            /* remove selectbox  */
+            $("#" + elementToBeRemove).remove();
+            console.log("removed: " + elementToBeRemove);
+            currentDropDownMenuCount--;
+         } // end of if statement
+      });//end of plus button
+      $('#search').click(function(){
+         var ingredients = ""
+         for(i = 1; i < currentDropDownMenuCount + 1; i++)
+         {
+            if(i == currentDropDownMenuCount)
+            {
+               ingredients += $("#dropDownMenu" + i).val();
+            } // end of if
+            else
+            {
+               ingredients += $("#dropDownMenu" + i).val() + ",";
+            } // end of else
+         } // end of for
+         console.log(currentDropDownMenuCount);
+         console.log(ingredients);
+         var key = "3d0b6270ca134eebb0f9cc1af049e93b";
+         $.ajax({
+            type: "GET",
+            url: "https://api.spoonacular.com/recipes/findByIngredients",
+            dataType: "json",
+            data: {
+               "ingredients": ingredients,
+               "apiKey": key
+            },
+            success: function(result){
+               // console.log(result[0].title);
+               // console.log(result[0].image);
+               $('#recipeResults').text('');
+               var i = 0;
+               var j = 0;
+               for(i in result) {
+                  console.log(result[i]);
+                      $('#recipeResults').append(`
+                     <div>
+                        <strong><span style = "font-size:2em;">${result[i].title}</span></strong>
+                        <br><br>
+                        <img src=${result[i].image}
+                        <br><br>
+                     </div>`)
+                  for (j in result[i].usedIngredients) {
+                      $('#recipeResults').append(`
+                       <span>${result[i].usedIngredients[j].original}</span>
+                       <br>
+                      `)
+                  } //end of first inner for
+                   for (k in result[i].missedIngredients) {
+                       $('#recipeResults').append(`
+                       <span>${result[i].missedIngredients[k].original}</span>
+                       <br>
+                      `)
+                   } //end of first inner for
+               } // end of outer for
+            }
+      }); //end of ajax;
+   }); //end of search
+
+       $("#averageIngredients").on("click", function () {
+           $.ajax({
+               type: "POST",
+               url: "/averageIngredients",
+               dataType: "json",
+               contentType: "application/json",
+               data: JSON.stringify({}),
+               success: function (data, status) {
+                   $('#averageIngredientsResult').html(data.averageIngredients[0].averageIngredients);
+                   console.log(data.averageIngredients);
+               },
+               error: function (xhr, status, error) {
+                   err = eval("(" + xhr.responseText + ")");
+                   console.error(err);
+               },
+               complete: function (data, status) { //optional, used for debugging purposes
+                   console.log(status);
+               }
+           });
+       });//end of average ingredients button
+
+       $("#ingredientCountByRecipe").on("click", function () {
+           $.ajax({
+               type: "POST",
+               url: "/ingredientCount",
+               dataType: "json",
+               contentType: "application/json",
+               data: JSON.stringify({}),
+               success: function (data, status) {
+                   console.log(data);
+                   $('#ingredientCountResult').html("");
+                   for (i in data.ingredientCountPerRecipe) {
+                       $('#ingredientCountResult').append(`<div>${data.ingredientCountPerRecipe[i].recipeName}: ${data.ingredientCountPerRecipe[i].ingredientCount}</div>`);
+                   }
+               },
+               error: function (xhr, status, error) {
+                   err = eval("(" + xhr.responseText + ")");
+                   console.error(err);
+               },
+               complete: function (data, status) { //optional, used for debugging purposes
+                   console.log(status);
+               }
+           });
+       });//end of ingredient count by recipe
+
+       $("#totalNumberRecipes").on("click", function () {
+           $.ajax({
+               type: "POST",
+               url: "/totalNumberRecipes",
+               dataType: "json",
+               contentType: "application/json",
+               data: JSON.stringify({}),
+               success: function (data, status) {
+                   console.log(data.ingredientCount[0].totalNumberOfRecipes);
+                   $('#totalNumberRecipesResult').html(data.ingredientCount[0].totalNumberOfRecipes);
+               },
+               error: function (xhr, status, error) {
+                   err = eval("(" + xhr.responseText + ")");
+                   console.error(err);
+               },
+               complete: function (data, status) { //optional, used for debugging purposes
+                   console.log(status);
+               }
+           });
+       });//end of total number of recipes in database
+   });//end of document ready
+</script>
+</body>
+
+</html>

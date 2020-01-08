@@ -1,0 +1,34 @@
+{
+  "name": "cst336-final-project",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "jquery": "^3.4.1",
+    "morgan": "~1.9.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^2.0.1"
+  },
+  "description": "[Heroku Link](https://reverse-recipe-book.herokuapp.com/)\r ## Rubric\r - [ ] Documentation (30 points)\r     - [ ] ERD\r     - [ ] User Stories\r     - [ ] Mockups and Related \r     - [ ] Screenshots \r - [ ] Three databases on must have at least 20 records (20 points)\r     - [ ] Saved History\r     - [ ] Overall Ingredients\r     - [ ] Recipes\r - [ ] \"User\" section in which anyone can search and filter data by at least three fields and sort the results without having to login (15 points)\r     - *There must be at least one JOIN relationship between your two of your database tables to provide the searchable data*\r - [ ] Users can login and logout from the system (10 points)\r - [ ] Users can create new records in the database \t(10 points)\r - [ ] Users can edit records in the database (10 points)\r - [ ] Users can delete records in the database (10 points)\r - [ ] Users can generate at least three reports, which use aggregate functions and at least one OUTER JOIN (15 points) \r     - *(e.g. average price of all products in the table)*\r - [ ] Project uses at least one 3rd party API (10 points)\r - [ ] Project uses only AJAX for at least one page \t(10 points)\r - [ ] Project has a nice and consistent design (10 points)",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charliekid/cst336-final-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charliekid/cst336-final-project/issues"
+  },
+  "homepage": "https://github.com/charliekid/cst336-final-project#readme"
+}

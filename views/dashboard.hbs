@@ -1,0 +1,42 @@
+
+{{> header }}
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter by 
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="/dashboard/id/{{ingredientId}}">IngredientId</a>
+    <a class="dropdown-item" href="/dashboard/name/{{ingredientId}}">IngredientName</a>
+    <a class="dropdown-item" href="/dashboard/recipe/{{recipeId}}">RecipeName</a>
+  </div>
+</div>
+
+
+<div class="table-wrapper">
+
+	<table class="table table-hovered">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Ingredient  Name</th>
+		</tr>
+		</thead>
+		<tbody>
+			 
+		{{#each ingredients}}
+			<tr>
+				<th scope="row">{{ingredientId}}</th>
+				<td> {{ingredientName}}</td>
+				<td>
+					<a href="/dashboard/edit/{{ingredientId}}" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+					<a href="/dashboard/delete/{{ingredientId}}" rel="noopener" class="btn btn-sm btn-danger">Delete</a>
+				</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{{>header}} 
+<div class="container">
+		{{#ingredients}}
+		<form action="/dashboard/id/" method="post">
+			
+		
+		
+	{{/ingredients}}
+	<div class="form">
+	<form action = "/dashboard/id/"method = "post">
+	<label for="Ingredient-name">Ingredient Id : </label>
+		<input type="text" class="form-control" name="ingredient_Id" id="ingredient-name" value="{{ingredientName}}" required>
+		</div>
+
+		<div class="form-row">
+			<button type="submit" class="btn btn-primary float-right">Filter by Ingredient Id</button>
+			<a href="/dashboard" class="btn btn-secondary float-right">Cancel</a>
+		</div>
+
+
+	
+{{#if ingredients.length}}
+   {{#each ingredients}}
+      <div>{{ingredientName}}</div>
+   {{/each}}
+{{else}}
+   No items
+{{/if}}
+
+
+	</form>
+</div>
+
+
+</body>
+</html>
