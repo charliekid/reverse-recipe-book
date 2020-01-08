@@ -1,4 +1,4 @@
-# CST-336-Final-Group Project
+# Reverse Recipe Book
 [Heroku Link](https://reverse-recipe-book.herokuapp.com/)
 ## Project Description
 This project idea came from my passion of cooking. Users are able to input their ingredients and search for a recipe from an API source. There is an administrator side to this website that interacts with a MySQL database. Here the administrator can create, edit, or delete records. 
