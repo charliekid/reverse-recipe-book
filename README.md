@@ -1,26 +1,7 @@
 # CST-336-Final-Group Project
 [Heroku Link](https://reverse-recipe-book.herokuapp.com/)
-## Rubric
-- [ ] Documentation (30 points)
-    - [ ] ERD
-    - [ ] User Stories
-    - [ ] Mockups and Related 
-    - [ ] Screenshots 
-- [ ] Three databases on must have at least 20 records (20 points)
-    - [ ] Saved History
-    - [ ] Overall Ingredients
-    - [ ] Recipes
-- [ ] "User" section in which anyone can search and filter data by at least three fields and sort the results without having to login (15 points)
-    - *There must be at least one JOIN relationship between your two of your database tables to provide the searchable data*
-- [ ] Users can login and logout from the system (10 points)
-- [ ] Users can create new records in the database 	(10 points)
-- [ ] Users can edit records in the database (10 points)
-- [ ] Users can delete records in the database (10 points)
-- [ ] Users can generate at least three reports, which use aggregate functions and at least one OUTER JOIN (15 points) 
-    - *(e.g. average price of all products in the table)*
-- [ ] Project uses at least one 3rd party API (10 points)
-- [ ] Project uses only AJAX for at least one page 	(10 points)
-- [ ] Project has a nice and consistent design (10 points)
+## Project Description
+This project idea came from my passion of cooking. Users are able to input their ingredients and search for a recipe from an API source. There is an administrator side to this website that interacts with a MySQL database. Here the administrator can create, edit, or delete records. 
 
 ## Sprint 1 ()
 **User Story**:
